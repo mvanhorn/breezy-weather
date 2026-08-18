@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
@@ -102,7 +101,8 @@ fun BreezyLineChart(
     topAxisItemPlacer: HorizontalAxis.ItemPlacer = remember {
         HorizontalAxis.ItemPlacer.aligned(
             shiftExtremeLines = false,
-            addExtremeLabelPadding = false
+            addExtremeLabelPadding = false,
+            shiftExtremeLabels = true
         )
     },
     topAxisSize: BaseAxis.Size = BaseAxis.Size.Auto(),
@@ -114,7 +114,6 @@ fun BreezyLineChart(
     markerFormatter: DefaultCartesianMarker.ValueFormatter? = null,
     markerVisibilityListener: CartesianMarkerVisibilityListener? = null,
 ) {
-    val view = LocalView.current
     val context = LocalContext.current
 
     val isTrendHorizontalLinesEnabled = SettingsManager.getInstance(context).isTrendHorizontalLinesEnabled
