@@ -35,6 +35,7 @@ import org.breezyweather.common.source.LocationSource
 import org.breezyweather.common.source.NonFreeNetSource
 import org.breezyweather.common.source.PollenIndexSource
 import org.breezyweather.common.source.PreferencesParametersSource
+import org.breezyweather.common.source.RadarSource
 import org.breezyweather.common.source.RemovedSource
 import org.breezyweather.common.source.ReverseGeocodingSource
 import org.breezyweather.common.source.Source
@@ -96,6 +97,7 @@ import org.breezyweather.sources.ipsb.IpSbLocationService
 import org.breezyweather.sources.jma.JmaService
 import org.breezyweather.sources.knmi.KnmiService
 import org.breezyweather.sources.lhmt.LhmtService
+import org.breezyweather.sources.librewxr.LibreWxrService
 import org.breezyweather.sources.lvgmc.LvgmcService
 import org.breezyweather.sources.meteoam.MeteoAmService
 import org.breezyweather.sources.meteolux.MeteoLuxService
@@ -172,6 +174,7 @@ class SourceManager @Inject constructor(
     jmaService: JmaService,
     knmiService: KnmiService,
     lhmtService: LhmtService,
+    libreWxrService: LibreWxrService,
     lvgmcService: LvgmcService,
     maliMeteoService: MaliMeteoService,
     meteoAmService: MeteoAmService,
@@ -308,6 +311,10 @@ class SourceManager @Inject constructor(
         gadgetbridgeService
     )
 
+    private val radarSourceList = persistentListOf(
+        libreWxrService
+    )
+
     private val timeZoneSource = breezyTimeZoneService
 
     // The order of this list is preserved in "source chooser" dialogs
@@ -327,6 +334,7 @@ class SourceManager @Inject constructor(
                 }
         )
         addAll(broadcastSourceList)
+        addAll(radarSourceList)
     }.toImmutableList()
 
     fun getSource(id: String): Source? = sourceList.firstOrNull { it.id == id }
@@ -397,6 +405,17 @@ class SourceManager @Inject constructor(
             (SourceConfigStore(context, it.id).getString("packages", null) ?: "").isNotEmpty()
         }
     }
+
+    // Radar
+    fun getRadarSources(): ImmutableList<RadarSource> = sourceList
+        .filterIsInstance<RadarSource>()
+        .toImmutableList()
+
+    fun getRadarSource(id: String): RadarSource? = getRadarSources()
+        .firstOrNull { it.id == id }
+
+    fun getRadarSourceOrDefault(id: String): RadarSource = getRadarSource(id)
+        ?: getRadarSource(BuildConfig.DEFAULT_RADAR_SOURCE)!!
 
     // Configurables sources
     fun getConfigurableSources(): ImmutableList<ConfigurableSource> = sourceList

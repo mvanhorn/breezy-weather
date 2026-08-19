@@ -569,6 +569,9 @@
     <string name="action_enable">Activer</string>
     <string name="action_allow">Autoriser</string>
     <string name="action_grant_permission">Appuyez pour accorder la permission.</string>
+    <string name="action_open_radar">Ouvrir la carte météo</string>
+    <!-- Radar screen -->
+    <string name="radar_title">Carte météo</string>
     <!-- Libellés -->
     <string name="label_description">Description</string>
     <string name="label_expanded">Développé</string>

@@ -511,6 +511,9 @@
     <string name="action_enable">Enable</string>
     <string name="action_allow">Allow</string>
     <string name="action_grant_permission">Tap to grant the permission.</string>
+    <string name="action_open_radar">Open weather map</string>
+    <!-- Radar screen -->
+    <string name="radar_title">Weather map</string>
     <!-- Button shown in the weather selection dialog -->
     <!-- Labels -->
     <string name="label_description">Description</string>
@@ -747,6 +750,7 @@
     <string name="settings_weather_source_gmet_instance" translatable="false">@string/settings_source_instance</string>
     <string name="settings_weather_source_igebu_instance" translatable="false">@string/settings_source_instance</string>
     <string name="settings_weather_source_imngb_instance" translatable="false">@string/settings_source_instance</string>
+    <string name="settings_weather_source_librewxr_instance" translatable="false">@string/settings_source_instance</string>
     <string name="settings_weather_source_mali_meteo_instance" translatable="false">@string/settings_source_instance</string>
     <string name="settings_weather_source_meteo_benin_instance" translatable="false">@string/settings_source_instance</string>
     <string name="settings_weather_source_meteo_tchad_instance" translatable="false">@string/settings_source_instance</string>
