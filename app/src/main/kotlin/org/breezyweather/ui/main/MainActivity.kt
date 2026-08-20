@@ -97,6 +97,12 @@ import org.breezyweather.ui.theme.ThemeManager
 import org.breezyweather.ui.theme.compose.BreezyWeatherTheme
 import javax.inject.Inject
 
+internal fun consumeNavigationAction(intent: Intent): String? {
+    val action = intent.action
+    intent.action = null
+    return action.takeUnless { it.isNullOrEmpty() }
+}
+
 @AndroidEntryPoint
 class MainActivity : BreezyActivity(), HomeFragment.Callback, ManagementFragment.Callback {
 
@@ -262,7 +268,8 @@ class MainActivity : BreezyActivity(), HomeFragment.Callback, ManagementFragment
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        consumeIntentAction(getIntent())
+        setIntent(intent)
+        consumeIntentAction(intent)
     }
 
     override fun onActivityReenter(resultCode: Int, data: Intent) {
@@ -741,8 +748,7 @@ class MainActivity : BreezyActivity(), HomeFragment.Callback, ManagementFragment
         get() = viewModel.currentLocation.value?.daylight ?: true
 
     private fun consumeIntentAction(intent: Intent) {
-        val action = intent.action
-        if (action.isNullOrEmpty()) return
+        val action = consumeNavigationAction(intent) ?: return
         val formattedId = intent.getStringExtra(KEY_MAIN_ACTIVITY_LOCATION_FORMATTED_ID)
         when (action) {
             ACTION_SHOW_ALERTS -> {
